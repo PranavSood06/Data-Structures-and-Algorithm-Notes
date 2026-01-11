@@ -1,0 +1,6 @@
+BaseCODE.cpp
+intro.cpp
+*.exe
+*.out
+.vscode/
+Books/
