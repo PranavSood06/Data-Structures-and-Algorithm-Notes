@@ -257,6 +257,81 @@ void DOubly_LL_implementation(){
     return ;
 }
 
+
+// ---------- Middle of the link list ----------------------------
+/*
+To find the middle of the linked list we will use two pointer approach
+it will help us to find the middle in one traversal only
+We will make two pointers slow and fast both pointing to head initially
+-> we will move slow by one step and fast by two steps in each iteration
+-> when fast reaches the end , slow will be at the middle
+Case 1 : ll has odd number of nodes
+    1 -> 2 -> 3 -> 4 -> 5 -> NULL
+         ^    ^
+        slow fast
+    
+    1 -> 2 -> 3 -> 4 -> 5 -> NULL
+              ^         ^
+             slow      fast
+    
+    1 -> 2 -> 3 -> 4 -> 5 -> NULL
+                     ^         ^
+                    slow      fast(NULL)
+    
+    So , middle is 3
+*/
+
+Node* middle_of_ll(Node* head){
+    if(head == NULL) return NULL;
+    Node* slow = head;
+    Node* fast = head;
+    while(fast != NULL && fast->next != NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* prev;
+    Node* next;
+    Node* child;
+};
+
+
+Node* flatten(Node* head) {
+        //storing hed to curr
+        Node* curr = head;
+        //till the last node 
+        while(curr!=NULL){
+            //if the child is present
+            if(curr->child != NULL){
+                //Storing the next so it wont be lost
+                Node* next = curr->next;
+                //Setting curr's next to its child
+                curr->next = flatten(curr->child);
+                //It is a Dll
+                curr->next->prev = curr;
+                curr->child = NULL;
+                //Moving the curr to the last node after flatting with the child
+                while(curr->next!=NULL){
+                    curr = curr->next;
+                }
+                // connect the next stored if present
+                if(next!=NULL){
+                    curr->next = next;
+                    next ->prev = curr;
+                }
+            }
+            // Traversing through the ll
+            curr = curr->next;
+        }
+        //returning the head pointer
+        return head;
+    }
 // Circular linked list ---------------------------------------------------
 
 /*

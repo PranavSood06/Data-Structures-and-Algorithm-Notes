@@ -4,3 +4,5 @@ intro.cpp
 *.out
 .vscode/
 Books/
+CF.cpp
+game.py

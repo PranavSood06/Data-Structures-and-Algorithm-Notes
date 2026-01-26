@@ -1,70 +1,72 @@
-#include<iostream>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
-# define MAX 1000
 
-class stack{
-    int top;
-public:
-    //Maximum size of stack 
-    int a[MAX];
 
-    stack(){
-        top = -1;
+// Using vector to implement stack
+class Stack{
+    vector<int> arr;
+    public:
+    void push(int x){
+        arr.push_back(x);
     }
-
-    bool push(int x);
-    int pop();
-    int peek();
-    bool isEmpty();
-
+    void pop(){
+        if(!arr.empty()){
+            arr.pop_back();
+        }else{
+            cout<<"Stack underflow"<<endl;
+        }
+    }
+    int top(){
+        if(!arr.empty()){
+            return arr.back();
+        }else{
+            cout<<"Stack is empty"<<endl;
+        }
+        return -1;
+    }
+    bool empty(){
+        return arr.size()==0;
+    }
 };
 
-bool stack::push(int x){
-    if(top>=(MAX-1)){
-        std::cout<<"Stack Overflow";
-        return false;
-    }else{
-        a[++top]=x;
-        std::cout<<x<<" Pushed into Stack"<<std::endl;
-        return true;
+// Using Linked list to implement stack
+class Stack_list{
+    list<int> arr;
+    public:
+    void push(int x){
+        arr.push_front(x);
     }
-}
-
-int stack::pop(){
-    if(top<0){
-        std::cout<<"Stack Underflow"<<std::endl;
-        return 0;
-    }else{
-        int x = a[top--];
-        return x;
+    void pop(){
+        if(!arr.empty()){
+            arr.pop_front();
+        }else{
+            cout<<"Stack underflow"<<endl;
+        }
     }
-}
-
-int stack::peek(){
-    if(top<0){
-        std::cout<<"Stack is Empty"<<std::endl;
-        return 0;
-    }else{
-        int x = a[top];
-        return x;
+    int top(){
+        if(!arr.empty()){
+            return arr.front();
+        }else{
+            cout<<"Stack is empty"<<endl;
+        }
+        return -1;
     }
-}
-
-bool stack::isEmpty(){
-    return top<0;
-}
+    bool empty(){
+        return arr.size()==0;
+    }
+};
 
 int main(){
-    stack s;
+    Stack_list s;
     s.push(10);
     s.push(20);
     s.push(30);
     s.push(40);
-    cout<<s.pop()<<"Poped from stack"<<endl;
-    cout<<"Top element is "<<s.peek()<<endl;
-    while(!s.isEmpty()){
-        cout<<s.peek()<<" ";
+    s.pop();
+    cout<<"Poped from stack"<<endl;
+    cout<<"Top element is "<<s.top()<<endl;
+    while(!s.empty()){
+        cout<<s.top()<<" ";
         s.pop();
     }// 30 20 10 
     return 0;

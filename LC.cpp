@@ -239,9 +239,11 @@ void decsort(vector<int>& values, vector<int>& weight,vector<float>& ratio){
     sort(ratio.begin(),ratio.end(),greater<int>());
 }
 
-vector<
+
 
 int main(){
-    vector<string> words;
+    vector<string> chess ;
+    int n = chess.size();
+    
     return 0;
 }
