@@ -1,6 +1,8 @@
 #include <iostream>
 #include<algorithm>
 #include <vector>
+#include<stack>
+#include<climits>
 using namespace std;
 
 vector<int> addOneToNumber(vector<int> arr)
@@ -240,10 +242,67 @@ void decsort(vector<int>& values, vector<int>& weight,vector<float>& ratio){
 }
 
 
+//Stock spanning problem
+//901
+vector<int> spanning(vector<int> price){
+    //vector<int> price = {100,80,60,70,60,75,85};
+    stack<int> s;
+    vector<int> span;
+    for(int i = 0;i<price.size();i++){
+        while(s.size()>0 && price[i] >= price[s.top()]){
+            s.pop();
+        }
+        if(s.empty()){
+            span.push_back(i+1);
+        }else{
+            span.push_back(i-s.top());
+        }
+        s.push(i);
+    }
+
+    for (int val:span){
+        cout<<val<<" ";
+    }
+    return span;
+}
+
+/*
+//Next Greatest Element 
+int main(){
+    vector<int> ques = {1,2,5,0,4,7,9};
+    stack<int> s;
+    vector<int> result(ques.size(),0);
+    for(int i = ques.size()-1;i>=0;i--){
+        while(s.size()!=0 && ques[i]>=s.top()){
+            s.pop();
+        }
+        if(s.empty()){
+            result[i] += -1;
+        }else{
+            result[i] += s.top();
+        }
+        s.push(ques[i]);
+    }
+    //reverse(result.begin(),result.end());
+    for (int val:result){
+        cout<<val<<" ";
+    }
+    return 0;
+}
+*/
+
+int total(vector<int> arr,int st,int end){
+    for(int i=st;i<=end;i++){
+
+    }
+}
+
+int subarray(vector<int> arr,int p){
+    
+}
 
 int main(){
-    vector<string> chess ;
-    int n = chess.size();
-    
-    return 0;
+    vector<int> arr = {3,1,4,2};
+    int p = 6;
+
 }

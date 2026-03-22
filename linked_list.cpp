@@ -332,6 +332,24 @@ Node* flatten(Node* head) {
         //returning the head pointer
         return head;
     }
+
+//Reverse a linked list
+Node* reverse(Node* head){
+    Node* prev = NULL;
+    Node* curr = head;
+    //traversing through the ll and reversing the links
+    while(curr!=NULL){
+        //storing the next node so it wont be lost
+        Node* next = curr->next;
+        //reversing the link
+        curr->next = prev;
+        //moving the prev and curr one step forward
+        prev = curr;
+        curr = next;
+    }
+    //returning the new head of the reversed linked list
+    return prev;
+}
 // Circular linked list ---------------------------------------------------
 
 /*
