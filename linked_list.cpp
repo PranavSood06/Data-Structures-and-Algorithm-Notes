@@ -53,7 +53,7 @@ class Node{
 */
 
 class List{
-    public:
+public:
     Node* head;
     Node* tail;
 

@@ -146,6 +146,96 @@ void kthLevel(Node* root,int k){
     return ;
 }
 
+//Lowest Common Ancester
+Node* LCF(Node* root,Node* p,Node* q){
+    if(root==NULL) return NULL;
+    if(root->data==p->data || root->data == q->data) return root;
+    Node* left = LCF(root->left,p,q);
+    Node* right = LCF(root->right,p,q);
+    if(left && right) return root;
+    if(left) return left ;
+    return right;
+}
+
+//Sum tree
+int sumtree(Node* root){
+    if(root == NULL) return 0;
+    int left = sumtree(root->left);
+    int right = sumtree(root->right);
+    root->data += left + right;
+    return root->data;
+}
+
+//Morris Inorder Trversal
+//node previous of a node in inorder traversal is called its predesssor
+Node* InorderPredecessor(Node* curr){
+    Node* org = curr;
+    curr = curr -> left;
+    while(curr->right!=NULL && curr->right != org){
+        curr->right;
+    }
+    return curr;
+}
+//Its take O(n) times but O(1) space thats the magic of the morris inorder traversal 
+vector<int> MIT(Node* root,vector<int> ans){
+    Node* curr = root;
+    while(curr != NULL){
+        if(curr->left == NULL){
+            ans.push_back(curr->data);
+            curr = curr->right;
+        }else{
+            Node* IP = InorderPredecessor(curr);
+            if(IP->right == NULL){
+                IP-> right = curr;
+                curr = curr->left;
+            }else{
+                IP -> right = NULL;
+                ans.push_back(curr->data);
+                curr = curr->right;
+            }
+        }
+    }
+}
+
+/*
+CBT indexing
+*/
+
+//Flatten a BinaryTree to a linked list 
+Node* Nextright = NULL;
+void flatten(Node* root) {
+    if(root == NULL) return;
+    flatten(root->right);
+    flatten(root->left);
+    root->left = NULL;
+    root->right = Nextright;
+    Nextright = root;
+}
+
+
+//Binry search tree
+// 🌳 Binary Search Tree (BST)
+// A Binary Tree where for every node:
+// - All values in the left subtree are smaller than the node
+// - All values in the right subtree are greater than the node
+// - This property holds recursively for every node
+
+// ➕ Insertion in BST:
+// 1. Start from the root
+// 2. Compare the value to be inserted with current node:
+//    - If value < node->val → move to left subtree
+//    - If value > node->val → move to right subtree
+// 3. Repeat until you reach a NULL position
+// 4. Insert the new node at that position
+
+// ⏱ Time Complexity:
+// - Average: O(log n)
+// - Worst case (skewed tree): O(n)
+
+// 🧠 Key Idea:
+// BST follows: Left < Root < Right
+
+
 int main(){
     vector<int> nums = {1,2,-1,-1,3,4,-1,-1,5,-1,-1};
     Node* root = MakeBinaryTree(nums);
@@ -158,5 +248,12 @@ int main(){
     cout<<"Kth level of a binary tree : ";
     int k = 2;
     kthLevel(root,k);
+    cout<<endl;
+    Node* p = new Node(4);
+    Node* q = new Node(5);
+    Node* LCF_ = LCF(root,p,q);
+    cout<<"LCF when p = 4 , q = 5 : "<<LCF_->data<<endl;
+    cout<<"Sum Tree : "<<endl;
+    cout<<sumtree(root);
     return 0;
 }
