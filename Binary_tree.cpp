@@ -235,6 +235,56 @@ void flatten(Node* root) {
 // 🧠 Key Idea:
 // BST follows: Left < Root < Right
 
+//Insert a Node
+Node* insert(Node* root,int val){
+    if(root==NULL) return new Node(val);
+    if(root->data > val){
+        root->left = insert(root->left,val);
+    }else{
+        root->right = insert(root->right,val);
+    }
+    return root;
+}
+
+//Search in a Tree
+bool ispresent(Node* root,int target){
+    if(root==NULL) return false;
+    if(root->data == target) return true;
+    return root->data>target?ispresent(root->left,target):ispresent(root->right,target);
+}
+//Delete a Node
+Node* InorderSuccessor(Node* curr){
+    curr = curr->right;
+    while(curr->left != NULL){
+        curr = curr->left;
+    }
+    return curr;
+}
+Node* deleteNode(Node* root, int key) {
+    if(root==NULL) return NULL;
+    if(key<root->data){
+        root->left = deleteNode(root->left,key);
+    }else if(key>root->data){
+        root->right = deleteNode(root->right,key);
+    }else{
+        if(root->left == NULL){
+            Node* temp = root->right;
+            delete root ;
+            return temp;
+        }
+        if(root->right == NULL){
+            Node* temp = root->left;
+            delete root ;
+            return temp;
+        }
+        Node* IS = InorderSuccessor(root);
+        root->data = IS->data;
+        root->right  = deleteNode(root->right,IS->data);
+        return root;
+    }
+    return root;
+}
+
 
 int main(){
     vector<int> nums = {1,2,-1,-1,3,4,-1,-1,5,-1,-1};
